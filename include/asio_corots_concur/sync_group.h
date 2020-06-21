@@ -36,6 +36,7 @@ namespace boost::asio::synchronization {
 
     private:
         friend class sync_group;
+        friend class sync_group_frame_signaler;
         explicit sync_group_signaler(sync_group_core &core) : core_(core) {}
 
         sync_group_core &core_;
@@ -45,8 +46,9 @@ namespace boost::asio::synchronization {
 //    class sync_group_frame_signaler {
 //    public:
 //        sync_group_frame_signaler(sync_group_signaler signaler) : signaler_(std::move(signaler)) {}
+//
 //        ~sync_group_frame_signaler() {
-//            co_await
+//            co_spawn(signaler_.core_.strand, std::bind(&sync_group_signaler::signal, &signaler_), detached);
 //        }
 //    private:
 //        sync_group_signaler signaler_;

@@ -15,7 +15,7 @@ namespace boost::asio::synchronization {
     template<typename T>
     class channel {
     public:
-        channel(io_context& executor) : strand_(executor) {}
+        channel(io_context& executor) : strand_(executor), cond_var_(executor) {}
 
         awaitable<void> close() {
             co_await post(strand_, use_awaitable);
@@ -40,7 +40,7 @@ namespace boost::asio::synchronization {
 
             queue_.push(i);
             ++put_;
-            co_await cond_var_.notify_one();
+            cond_var_.notify_one();
             co_await post(strand_.context(), use_awaitable);
             co_return true;
         }
