@@ -1,4 +1,8 @@
-ADD_SUBDIRECTORY(googletest)
+find_library(GTEST_LIB gtest)
+find_library(GTEST_MAIN_LIB gtest_main)
+IF (NOT GTEST_LIB OR NOT GTEST_MAIN_LIB)
+    ADD_SUBDIRECTORY(googletest)
+ENDIF()
 
 SET(ASIOCTSCONCURTESTS_SOURCE_FILES main.cpp)
 
